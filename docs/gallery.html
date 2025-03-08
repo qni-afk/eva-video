@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Галерея изображений</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/gallery.css">
+</head>
+<body>
+    <div class="container">
+        <h1>My sexy wife</h1>
+        <div class="filter-container">
+            <button class="filter-btn active" data-filter="all">Все</button>
+            <button class="filter-btn" data-filter="funny">Смешные</button>
+            <button class="filter-btn" data-filter="cute">Милые</button>
+            <button class="filter-btn" data-filter="cool">Крутые</button>
+        </div>
+        <div class="gallery">
+            <!-- Видео 1 -->
+            <div class="gallery-item" data-category="funny">
+                <img src="./video/preview gif/1.png" alt="Превью видео 1" class="preview-img">
+                <video class="gallery-video" loop muted>
+                    <source src="./video/gif/1.mp4" type="video/mp4">
+                </video>
+                <div class="overlay"style="display:none;">
+                    <h3>Видео 1</h3>
+                    <p>Наведите для воспроизведения</p>
+                </div>
+            </div>
+
+            <!-- Видео 2 -->
+            <div class="gallery-item" data-category="funny">
+                <img src="./video/preview gif/2.png" alt="Превью видео 2" class="preview-img">
+                <video class="gallery-video" loop muted>
+                    <source src="./video/gif/2.mp4" type="video/mp4">
+                </video>
+                <div class="overlay"style="display:none;">
+                    <h3>Видео 2</h3>
+                    <p>Наведите для воспроизведения</p>
+                </div>
+            </div>
+
+            <!-- Видео 3 -->
+            <div class="gallery-item" data-category="funny">
+                <img src="./video/preview gif/3.png" alt="Превью видео 3" class="preview-img">
+                <video class="gallery-video" loop muted>
+                    <source src="./video/gif/3.mp4" type="video/mp4">
+                </video>
+                <div class="overlay"style="display:none;">
+                    <h3>Видео 3</h3>
+                    <p>Наведите для воспроизведения</p>
+                </div>
+            </div>
+
+            <!-- Видео 4 -->
+            <div class="gallery-item">
+                <img src="./video/preview gif/4.png" alt="Превью видео 4" class="preview-img">
+                <video class="gallery-video" loop muted>
+                    <source src="./video/gif/4.mp4" type="video/mp4">
+                </video>
+                <div class="overlay"style="display:none;">
+                    <h3>Видео 4</h3>
+                    <p>Наведите для воспроизведения</p>
+                </div>
+            </div>
+
+            <!-- Видео 5 -->
+            <div class="gallery-item">
+                <img src="./video/preview gif/5.png" alt="Превью видео 5" class="preview-img">
+                <video class="gallery-video" loop muted>
+                    <source src="./video/gif/5.mp4" type="video/mp4">
+                </video>
+                <div class="overlay"style="display:none;">
+                    <h3>Видео 5</h3>
+                    <p>Наведите для воспроизведения</p>
+                </div>
+            </div>
+
+            <!-- Видео 6 -->
+            <div class="gallery-item">
+                <img src="./video/preview gif/6.png" alt="Превью видео 6" class="preview-img">
+                <video class="gallery-video" loop muted>
+                    <source src="./video/gif/6.mp4" type="video/mp4">
+                </video>
+                <div class="overlay"style="display:none;">
+                    <h3>Видео 6</h3>
+                    <p>Наведите для воспроизведения</p>
+                </div>
+            </div>
+
+            <!-- Видео 7 -->
+            <div class="gallery-item">
+                <img src="./video/preview gif/7.png" alt="Превью видео 7" class="preview-img">
+                <video class="gallery-video" loop muted>
+                    <source src="./video/gif/7.MOV" type="video/mp4">
+                </video>
+                <div class="overlay"style="display:none;">
+                    <h3>Видео 7</h3>
+                    <p>Наведите для воспроизведения</p>
+                </div>
+            </div>
+
+            <!-- Видео 8 -->
+            <div class="gallery-item">
+                <img src="./video/preview gif/8.png" alt="Превью видео 8" class="preview-img">
+                <video class="gallery-video" loop muted>
+                    <source src="./video/gif/8.mp4" type="video/mp4">
+                </video>
+                <div class="overlay"style="display:none;">
+                    <h3>Видео 8</h3>
+                    <p>Наведите для воспроизведения</p>
+                </div>
+            </div>
+
+            <!-- Видео 9 -->
+            <div class="gallery-item">
+                <img src="./video/preview gif/9.png" alt="Превью видео 9" class="preview-img">
+                <video class="gallery-video" loop muted>
+                  <source src="./video/gif/9.MOV" type="video/mp4">
+              </video>
+                      <h3>Изображение 7</h3>
+                      <p>Описание изображения</p>
+                  </div>
+            </div>
+        </div>
+    </div>
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <video class="modal-content" id="modalVideo" controls>
+            <source src="./video/gif/10.MOV" type="video/mp4">
+        </video>
+
+        <img class="modal-content" id="modalImage">
+    </div>
+    <script src="./js/gallery.js"></script>
+</body>
+</html>

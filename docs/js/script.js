@@ -1,11 +1,25 @@
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
+ScrollTrigger.config({
+    ignoreMobileResize: true // Предотвращает проблемы с мобильной прокруткой
+});
+
 const smoother = ScrollSmoother.create({
     wrapper: ".wrapper",
     content: ".content",
     smooth: 1.5,
     effects: true,
-    normalizeScroll: true
+    normalizeScroll: true,
+    ignoreMobileResize: true,
+    preventDefault: true,
+    // Исключаем фиксированные элементы
+    ignore: ['.navbar', '#love-timer', '.music-controls']
+});
+
+// Добавляем обработчик для фиксированных элементов
+gsap.set(['.navbar', '#love-timer', '.music-controls'], {
+    position: 'fixed',
+    zIndex: 9999
 });
 
 // Анимации заголовка
@@ -52,16 +66,14 @@ let isPlaying = false;
 
 musicBtn.addEventListener('click', () => {
     isPlaying = !isPlaying;
-    musicBtn.classList.toggle('playing', isPlaying);
+    musicBtn.classList.toggle('playing');
 
     if (isPlaying) {
         audio.play();
-        musicStatus.textContent = "Pause"; // Изменяем текст на "Pause"
-        musicBtn.querySelector('img').src = './images/pause.png'; // Изменяем иконку на паузу
+        musicBtn.querySelector('.loader').style.opacity = '1';
     } else {
         audio.pause();
-        musicStatus.textContent = "Play"; // Изменяем текст на "Play"
-        musicBtn.querySelector('img').src = './images/sound.png'; // Возвращаем иконку на звук
+        musicBtn.querySelector('.loader').style.opacity = '0.5';
     }
 });
 
@@ -114,15 +126,29 @@ document.querySelector('.no-btn').addEventListener('mouseover', function() {
     this.style.setProperty('--move', Math.random() > 0.5 ? 1 : -1);
 });
 
+// Функция создания сердечек
+function createHeart() {
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.innerHTML = 'love you';
+    heart.style.left = Math.random() * 50 + 'vw';
+    heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+    document.querySelector('.hearts').appendChild(heart);
+
+    // Удаляем сердечко после анимации
+    setTimeout(() => {
+        heart.remove();
+    }, 5000);
+}
+
+// Обработчик для кнопки "да"
 document.querySelector('.yes-btn').addEventListener('click', function() {
-    gsap.to('.love-message', {
-        scale: 1.2,
-        color: '#ff3366',
-        duration: 0.5,
-        yoyo: true,
-        repeat: 1
-    });
-    for(let i = 0; i < 10; i++) createHeart();
+    // Создаем много сердечек
+    for(let i = 0; i < 15; i++) {
+        setTimeout(() => {
+            createHeart();
+        }, i * 150);
+    }
 });
 
 document.querySelectorAll('.gallery-image').forEach(image => {
@@ -266,4 +292,73 @@ document.addEventListener('DOMContentLoaded', function() {
     // Проверяем видимость при прокрутке
     window.addEventListener('scroll', checkVisibility);
     checkVisibility(); // Проверяем сразу при загрузке
+});
+
+// Добавьте после существующего кода для музыки
+const volumeSlider = document.getElementById('volume-slider');
+const volumeControl = document.querySelector('.volume-control');
+
+// Показываем/скрываем слайдер громкости при наведении
+musicBtn.addEventListener('mouseenter', () => {
+    volumeControl.classList.add('show');
+});
+
+document.querySelector('.music-controls').addEventListener('mouseleave', () => {
+    volumeControl.classList.remove('show');
+});
+
+// Управление громкостью
+volumeSlider.addEventListener('input', (e) => {
+    const volume = e.target.value / 100;
+    audio.volume = volume;
+});
+
+// Сохранение громкости в localStorage
+volumeSlider.addEventListener('change', (e) => {
+    localStorage.setItem('audioVolume', e.target.value);
+});
+
+// Восстановление громкости при загрузке страницы
+document.addEventListener('DOMContentLoaded', () => {
+    const savedVolume = localStorage.getItem('audioVolume');
+    if (savedVolume !== null) {
+        volumeSlider.value = savedVolume;
+        audio.volume = savedVolume / 100;
+    }
+});
+
+function stabilizeFixedElements() {
+    const fixedElements = [
+        document.querySelector('.navbar'),
+        document.querySelector('#love-timer'),
+        document.querySelector('.music-controls')
+    ];
+
+    let ticking = false;
+
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                fixedElements.forEach(element => {
+                    if (element) {
+                        element.style.transform = 'translateZ(0)';
+                        element.style.backfaceVisibility = 'hidden';
+                    }
+                });
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }, { passive: true });
+}
+
+stabilizeFixedElements();
+
+document.addEventListener('DOMContentLoaded', () => {
+    const galleryLink = document.querySelector('a[href="./gallery.html"]');
+    if (galleryLink) {
+        galleryLink.addEventListener('click', (e) => {
+            window.location.href = './gallery.html';
+        });
+    }
 });

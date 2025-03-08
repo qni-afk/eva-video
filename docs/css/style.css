@@ -23,31 +23,54 @@ body {
   overflow: hidden;
 }
 
-/* Стили для навигационного меню */
+/* Стили для навигации */
 .navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  background: rgba(255, 255, 255, 0.7); /* Прозрачный фон */
-  padding: 10px 20px;
-  z-index: 1000; /* Чтобы меню было поверх других элементов */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .nav-list {
-  list-style: none;
-  display: flex;
-  justify-content: space-around;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
-.nav-list li a {
-  text-decoration: none;
-  color: #333; /* Цвет текста */
-  font-weight: bold;
+.nav-list a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
 }
 
-.nav-list li a:hover {
-  color: #ff4081; /* Цвет текста при наведении */
+.nav-list a:hover {
+    color: #ff69b4;
+    text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+    .nav-list {
+        gap: 15px;
+    }
+
+    .nav-list a {
+        font-size: 1rem;
+    }
 }
 
 .video-background {
@@ -57,7 +80,7 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  z-index: -1;
+  z-index: 1;
   background: transparent !important;
 }
 
@@ -129,25 +152,52 @@ body {
 }
 
 .section {
-  opacity: 0;
-  transform: translateY(50px);
   margin: 100px 0;
   padding: 40px;
-  background: rgba(244, 115, 115, 0.984);
   border-radius: 20px;
   backdrop-filter: blur(10px);
-  transition: transform 0.3s ease, background 0.3s ease;
-  box-shadow: 0 10px 32px rgb(178, 100, 115);
-  z-index: 999;
-  background: linear-gradient(45deg, rgba(255, 170, 255, 0.977), Tomato, Violet);
+  transition: transform 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.section h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
 
+.section p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: white;
+  opacity: 0.9;
 }
 
 .section:hover {
-  transform: scale(1.05);
-  background: rgba(255,255,255,0.2);
+  transform: scale(1.02);
+}
+
+/* Добавляем фон для секции при наведении */
+.section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.section:hover::before {
+  opacity: 1;
 }
 
 .music-btn {
@@ -198,69 +248,104 @@ body {
 
 /* Новые стили */
 #love-timer {
-  position: fixed;
+  position: sticky;
   bottom: 20px;
-  left: 20px;
-  background: rgba(255,255,255,0.1);
+  margin-top: calc(100vh - 100px);
+  background: rgba(255, 255, 255, 0.1);
   padding: 15px;
   border-radius: 10px;
   backdrop-filter: blur(5px);
-  z-index: 1000;
+  z-index: 9999;
   font-size: 0.9rem;
+  transform: translateZ(0);
+  will-change: transform;
 }
 
-.love-message {
-  margin-top: 150px;
-  font-size: 30px;
-  font-weight: 900;
-  letter-spacing:normal;
-  animation: heartbeat 1.5s infinite;
+.love-message{
+  position: relative;
+  top: 100px;
+}
+/* Стили для текста сообщения */
+.love-text {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #ff6b6b;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  animation: colorChange 3s ease infinite;
 }
 
-@keyframes heartbeat {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+/* Анимация изменения цвета текста */
+@keyframes colorChange {
+  0% { color: #ff6b6b; }
+  50% { color: #ff8e8e; }
+  100% { color: #ff6b6b; }
 }
 
-.response-buttons {
-  margin-top: 20px;
-  font-weight: 900;
-}
-
-
-.yes-btn, .no-btn {
-  padding: 10px 30px;
-  margin: 0 10px;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: all 0.3s;
-  font-family:Montserrat Alternates;
-  font-size: 20px;
-  font-weight: 900;
-
-}
-
+/* Стили для кнопок ответа */
 .yes-btn {
-  background: #ff3366;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
   color: white;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+  transition: all 0.3s ease;
+  margin: 0 10px;
+}
+
+.yes-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+}
+
+.yes-btn:active {
+  transform: scale(0.95);
 }
 
 .no-btn {
+  padding: 0.8rem 1.5rem;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
   background: transparent;
-  border: 2px solid #fff;
   color: white;
-  position: relative;
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  margin: 0 10px;
 }
 
 .no-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
   transform: translateX(calc(var(--move) * 100px))
              translateY(calc(var(--move) * -50px));
 }
 
-.no-btn {
-  transition: all 1s cubic-bezier(0.9, 0.1, 0.25, 1);
+/* Анимация сердечка */
+@keyframes heartBeat {
+  0% { transform: scale(1); }
+  14% { transform: scale(1.3); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.3); }
+  70% { transform: scale(1); }
+}
+
+/* Медиа-запрос для мобильных устройств */
+@media (max-width: 768px) {
+  .love-text {
+    font-size: 2rem;
+  }
+
+  .yes-btn, .no-btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    margin: 5px;
+  }
 }
 
 .gallery {
@@ -299,15 +384,6 @@ body {
   font-size: 1.2rem;
 }
 
-html, body {
-  margin: 0;
-  padding: 0;
-  background: transparent !important;
-  color: #fff;
-  overflow-x: hidden;
-  height: 100%;
-}
-
 .content {
   position: relative;
   width: 100%;
@@ -341,30 +417,6 @@ button {
   border-radius: 5px;
 }
 
-/* Защита от белого фона при скролле */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: transparent !important;
-  z-index: -2;
-  pointer-events: none;
-}
-
-/* Дополнительные стили */
-* {
-  box-sizing: border-box;
-}
-
-/* Защита от прокрутки по горизонтали */
-html {
-  overflow-x: hidden;
-  width: 100vw;
-}
-
 /* Стили для кнопки перехода */
 .button-container {
     text-align: center; /* Центрируем кнопку */
@@ -394,4 +446,159 @@ html {
   font-size: 16px;
   color: #fff; /* Цвет текста */
   transition: opacity 0.3s ease;
+}
+
+/* Главный контейнер для музыкальных элементов */
+.music-controls {
+    position: fixed;           /* Закрепляем на экране */
+    top: 30px;                /* Отступ сверху */
+    right: 30px;              /* Отступ справа */
+    display: flex;            /* Включаем flex-контейнер */
+    flex-direction: column;   /* Элементы в столбик */
+    align-items: center;      /* Центрируем по горизонтали */
+    gap: 15px;               /* Отступ между элементами */
+    z-index: 1000;           /* Поверх других элементов */
+}
+
+/* Кнопка управления музыкой */
+.music-btn {
+    width: 50px;              /* Ширина кнопки */
+    height: 50px;             /* Высота кнопки */
+    border: none;             /* Убираем рамку */
+    cursor: pointer;          /* Курсор-указатель при наведении */
+    transition: all 0.3s;     /* Плавность анимаций */
+    display: flex;            /* Flex для центрирования */
+    align-items: center;      /* Центрируем по вертикали */
+    justify-content: center;  /* Центрируем по горизонтали */
+    background: transparent;  /* Прозрачный фон */
+    animation: moveButton 3s infinite ease-in-out; /* Бесконечная анимация движения */
+}
+
+/* Анимированный индикатор (эквалайзер) */
+.loader {
+    width: 45px;             /* Ширина индикатора */
+    aspect-ratio: .75;       /* Пропорции высоты к ширине */
+    --c: no-repeat linear-gradient(#fff 0 0); /* Белый цвет для полосок */
+    background:              /* Три полоски эквалайзера */
+        var(--c) 0%   50%,   /* Левая полоска */
+        var(--c) 50%  50%,   /* Средняя полоска */
+        var(--c) 100% 50%;   /* Правая полоска */
+    animation: l7 1s infinite linear alternate; /* Анимация эквалайзера */
+    opacity: 0.7;            /* Начальная прозрачность */
+}
+
+/* Анимация эквалайзера */
+@keyframes l7 {
+    0%  {background-size: 20% 50% ,20% 50% ,20% 50% }    /* Все полоски одинаковой высоты */
+    20% {background-size: 20% 20% ,20% 50% ,20% 50% }    /* Первая полоска уменьшается */
+    40% {background-size: 20% 100%,20% 20% ,20% 50% }    /* Первая максимальная, вторая минимальная */
+    60% {background-size: 20% 50% ,20% 100%,20% 20% }    /* Движение волны */
+    80% {background-size: 20% 50% ,20% 50% ,20% 100%}    /* Последняя полоска максимальная */
+    100%{background-size: 20% 50% ,20% 50% ,20% 50% }    /* Возврат к начальному состоянию */
+}
+
+/* Анимация движения кнопки вверх-вниз */
+@keyframes moveButton {
+    0% { transform: translateY(0); }         /* Начальная позиция */
+    50% { transform: translateY(-10px); }    /* Поднимаем вверх */
+    100% { transform: translateY(0); }       /* Возвращаем назад */
+}
+
+/* Стиль эквалайзера при проигрывании */
+.music-btn.playing .loader {
+    opacity: 1;              /* Делаем полностью видимым */
+}
+
+/* Контейнер ползунка громкости */
+.volume-slider-container {
+    position: absolute;      /* Абсолютное позиционирование */
+    top: 60px;              /* Отступ сверху */
+    right:  50px;             /* Центрируем от правого края */
+    transform: translateX(50%); /* Точное центрирование */
+    background: rgba(0, 0, 0, 0.4); /* Полупрозрачный фон */
+    padding: 10px;          /* Внутренние отступы */
+    border-radius: 10px;    /* Скругление углов */
+    backdrop-filter: blur(5px); /* Размытие фона */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Тонкая рамка */
+    visibility: hidden;      /* Полностью скрываем элемент */
+    opacity: 0;             /* Прозрачность */
+    transition: all 0.3s;   /* Плавная анимация */
+}
+
+/* Показываем ползунок при наведении на музыкальные контролы */
+.music-controls:hover .volume-slider-container {
+    visibility: visible;     /* Делаем видимым */
+    opacity: 1;             /* Делаем непрозрачным */
+    top: 70px;             /* Смещаем вниз */
+}
+
+/* Стили для самого ползунка */
+#volume-slider {
+    -webkit-appearance: none;  /* Убираем стандартный стиль */
+    width: 100px;             /* Ширина ползунка */
+    height: 4px;              /* Высота ползунка */
+    background: rgba(255, 255, 255, 0.3); /* Цвет фона */
+    border-radius: 2px;       /* Скругление углов */
+    outline: none;            /* Убираем контур при фокусе */
+}
+
+/* Стили для бегунка ползунка */
+#volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;  /* Убираем стандартный стиль */
+    width: 12px;              /* Ширина бегунка */
+    height: 12px;             /* Высота бегунка */
+    background: #fff;         /* Цвет бегунка */
+    border-radius: 50%;       /* Круглая форма */
+    cursor: pointer;          /* Курсор-указатель */
+    transition: all 0.3s;     /* Плавная анимация */
+}
+
+/* Эффект при наведении на бегунок */
+#volume-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);    /* Увеличиваем размер */
+    background: #ff6b6b;      /* Меняем цвет */
+}
+
+.fixed-elements {
+  position: relative;
+  z-index: 1000;
+}
+
+/* Контейнер для сердечек */
+.hearts {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+/* Стили для сердечек */
+.heart {
+    position: absolute;
+    font-size: 2rem;
+    transform: translateY(0);
+    animation: floatHeart linear forwards;
+    opacity: 1;
+}
+
+/* Анимация полета сердечек */
+@keyframes floatHeart {
+    0% {
+        transform: translateY(100vh) scale(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh) scale(1);
+        opacity: 0;
+    }
 }
