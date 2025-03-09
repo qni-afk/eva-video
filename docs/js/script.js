@@ -292,6 +292,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Проверяем видимость при прокрутке
     window.addEventListener('scroll', checkVisibility);
     checkVisibility(); // Проверяем сразу при загрузке
+
+    // Добавляем обработчик для всех ссылок в навигации
+    document.querySelectorAll('.nav-list a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault(); // Предотвращаем стандартное поведение
+            const href = this.getAttribute('href');
+            console.log('Переход по ссылке:', href);
+            window.location.href = href;
+        });
+    });
 });
 
 // Добавьте после существующего кода для музыки

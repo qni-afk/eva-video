@@ -26,51 +26,139 @@ body {
 /* Стили для навигации */
 .navbar {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 20px;
-    z-index: 100;
-    background: rgba(0, 0, 0, 0.3);
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(10px);
+    border-radius: 30px;
+    padding: 10px 25px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .nav-list {
     display: flex;
-    justify-content: center;
-    gap: 30px;
+    gap: 15px;
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
-.nav-list a {
+.nav-list button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
     color: white;
-    text-decoration: none;
-    font-size: 1.1rem;
+    cursor: pointer;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 15px;
+    padding: 10px 20px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Эффект свечения при наведении */
+.nav-list button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+.nav-list button:hover::before {
+    left: 100%;
+}
+
+/* Стили для активной кнопки */
+.nav-list button.active {
+    background: linear-gradient(45deg, #ff6b6b, #ffc0cb);
+    box-shadow: 0 0 20px rgba(255, 107, 107, 0.4);
+    transform: scale(1.05);
     font-weight: 500;
-    transition: color 0.3s ease;
 }
 
-.nav-list a:hover {
-    color: #ff69b4;
-    text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+/* Эффекты при наведении */
+.nav-list button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Адаптивность для мобильных устройств */
+/* Эффект при нажатии */
+.nav-list button:active {
+    transform: scale(0.95);
+}
+
+/* Анимация появления */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.nav-list button {
+    animation: fadeInDown 0.5s ease forwards;
+}
+
+/* Задержка анимации для каждой кнопки */
+.nav-list li:nth-child(1) button { animation-delay: 0.1s; }
+.nav-list li:nth-child(2) button { animation-delay: 0.2s; }
+.nav-list li:nth-child(3) button { animation-delay: 0.3s; }
+
+/* Медиа-запрос для мобильных устройств */
 @media (max-width: 768px) {
-    .nav-list {
-        gap: 15px;
+    .navbar {
+        width: 90%;
+        padding: 8px 15px;
     }
 
-    .nav-list a {
-        font-size: 1rem;
+    .nav-list {
+        gap: 10px;
     }
+
+    .nav-list button {
+        font-size: 14px;
+        padding: 8px 15px;
+    }
+}
+
+/* Добавляем подсветку текста */
+.nav-list button {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+/* Добавляем эффект пульсации для активной кнопки */
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(255, 107, 107, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0); }
+}
+
+.nav-list button.active {
+    animation: pulse 2s infinite;
 }
 
 .video-background {
@@ -601,4 +689,24 @@ button {
         transform: translateY(-100vh) scale(1);
         opacity: 0;
     }
+}
+
+.nav-list button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 16px;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+}
+
+.nav-list button:hover {
+    color: #ff6b6b;
+}
+
+.nav-list button.active {
+    color: #ff6b6b;
+    font-weight: bold;
 }

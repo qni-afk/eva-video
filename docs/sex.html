@@ -6,21 +6,18 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./old/sex.css">
+    <link rel="stylesheet" href="./css/sex.css">
 </head>
 <body>
     <!-- Контейнер для падающих сердечек -->
     <div class="falling-hearts"></div>
 
-    <nav class="navigation">
-        <div class="nav-content">
-            <div class="logo">Our Story</div>
-            <ul class="nav-links">
-                <li><a href="./sex.html" class="active">Story</a></li>
-                <li><a href="./main.html">About us</a></li>
-                <li><a href="./gallery.html">Gallery</a></li>
-                <!-- Временно уберем ссылку на cute.html, пока файл не создан -->
-                <!-- <li><a href="cute.html">Cute content</a></li> -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <ul class="nav-list">
+                <li><button class="active">Story</button></li>
+                <li><button onclick="window.location.href='main.html'">About us</button></li>
+                <li><button onclick="window.location.href='gallery.html'">Gallery</button></li>
             </ul>
         </div>
     </nav>
@@ -52,7 +49,7 @@
             <div class="chapter-number">Chapter 1</div>
             <div class="chapter-title">The First Time I Saw You</div>
             <div class="photo">
-                <img src="./old/scale_1200-1.png" alt="Our First Meeting">
+                <img src="./images/scale_1200-1.png" alt="Our First Meeting">
             </div>
             <div class="text-block">
                 <p class="date">September 15, 2023</p>
@@ -64,7 +61,7 @@
             <div class="chapter-number">Chapter 2</div>
             <div class="chapter-title">Our First Date</div>
             <div class="photo">
-                <img src="./old/banner.jpg" alt="Our First Date">
+                <img src="./images/banner.jpg" alt="Our First Date">
             </div>
             <div class="text-block">
                 <p class="date">October 1, 2023</p>
@@ -116,6 +113,6 @@
         </div>
     </div>
 
-    <script src="./old/sex.js"></script>
+    <script src="./js/sex.js"></script>
 </body>
 </html>
