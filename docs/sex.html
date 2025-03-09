@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Our Love Story ❤️</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./old/sex.css">
+</head>
+<body>
+    <!-- Контейнер для падающих сердечек -->
+    <div class="falling-hearts"></div>
+
+    <nav class="navigation">
+        <div class="nav-content">
+            <div class="logo">Our Story</div>
+            <ul class="nav-links">
+                <li><a href="./sex.html" class="active">Story</a></li>
+                <li><a href="./main.html">About us</a></li>
+                <li><a href="./gallery.html">Gallery</a></li>
+                <!-- Временно уберем ссылку на cute.html, пока файл не создан -->
+                <!-- <li><a href="cute.html">Cute content</a></li> -->
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Контролы для управления музыкой -->
+<div class="music-controls">
+    <!-- Кнопка воспроизведения/паузы с анимированным индикатором -->
+    <button id="music-btn" class="music-btn">
+        <div class="loader"></div>  <!-- Анимированный эквалайзер -->
+    </button>
+    <!-- Контейнер для ползунка громкости -->
+    <div class="volume-slider-container">
+        <input type="range" id="volume-slider" min="0" max="100" value="50">
+    </div>
+</div>
+
+<!-- Аудио элемент -->
+<audio id="background-music" loop>
+    <source src="./music/gde-fantom-ya-tebya-lyublyu-mp3.mp3" type="audio/mpeg">
+</audio>
+
+    <header id="home" class="header">
+        <h1>Our Love Story <span class="heart">❤️</span></h1>
+        <p>A tale of two hearts becoming one</p>
+    </header>
+
+    <div class="content">
+        <section id="first-meet" class="memory-section chapter">
+            <div class="chapter-number">Chapter 1</div>
+            <div class="chapter-title">The First Time I Saw You</div>
+            <div class="photo">
+                <img src="./old/scale_1200-1.png" alt="Our First Meeting">
+            </div>
+            <div class="text-block">
+                <p class="date">September 15, 2023</p>
+                <p>the first time I heard you, I immediately liked your voice ❤️</p>
+            </div>
+        </section>
+
+        <section id="first-date" class="memory-section chapter">
+            <div class="chapter-number">Chapter 2</div>
+            <div class="chapter-title">Our First Date</div>
+            <div class="photo">
+                <img src="./old/banner.jpg" alt="Our First Date">
+            </div>
+            <div class="text-block">
+                <p class="date">October 1, 2023</p>
+                <p>We laughed, watched movies and every day I fell in love with you more and more ✨</p>
+            </div>
+        </section>
+
+        <section id="first-kiss" class="memory-section chapter">
+            <div class="chapter-number">Chapter 3</div>
+            <div class="chapter-title">The Perfect Moment</div>
+            <div class="text-block large-text">
+                <p class="date">September 15, 2024</p>
+                <p> We started calling each other via video, you were cutely embarrassed at first💫</p>
+            </div>
+        </section>
+
+        <section id="together" class="memory-section chapter">
+            <div class="chapter-number">Chapter 4</div>
+            <div class="chapter-title">Together Forever</div>
+            <div class="text-block large-text">
+                <p class="date">Present Day</p>
+                <p>Every day with you is a new chapter in our beautiful story 💕</p>
+            </div>
+        </section>
+    </div>
+
+    <div class="timeline">
+        <div class="timeline-line"></div>
+        <div class="timeline-point" data-chapter="1"></div>
+        <div class="timeline-point" data-chapter="2"></div>
+        <div class="timeline-point" data-chapter="3"></div>
+        <div class="timeline-point" data-chapter="4"></div>
+    </div>
+
+    <div class="secret-message">
+        Ты делаешь каждый мой день особенным...
+    </div>
+
+    <div class="modal" id="modal">
+        <img id="modal-img" src="" alt="Увеличенное фото">
+    </div>
+
+    <!-- Интерактивное сообщение о любви -->
+    <div class="love-message">
+        <p class="love-text">to continue answer do you love me?? ❤️</p>
+        <div class="response-buttons">
+            <button class="yes-btn">Yes, of course</button>
+            <button class="no-btn">No</button>
+        </div>
+    </div>
+
+    <script src="./old/sex.js"></script>
+</body>
+</html>

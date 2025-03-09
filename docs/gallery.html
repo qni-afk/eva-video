@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="./css/gallery.css">
 </head>
 <body>
+    <a href="main.html" class="back-button">
+        <img src="./video/gif/icons8-house-96.svg" alt="Назад" class="back-icon">
+    </a>
     <div class="container">
         <h1>My sexy wife</h1>
         <div class="filter-container">
@@ -16,6 +19,7 @@
             <button class="filter-btn" data-filter="cute">Милые</button>
             <button class="filter-btn" data-filter="cool">Крутые</button>
         </div>
+        <button class="mode-btn" id="3d-mode">3D Mode</button>
         <div class="gallery">
             <!-- Видео 1 -->
             <div class="gallery-item" data-category="funny">
@@ -133,6 +137,42 @@
 
         <img class="modal-content" id="modalImage">
     </div>
+    <div class="contact-form">
+        <h2>Отправить сообщение</h2>
+        <form id="telegramForm">
+            <div class="form-group">
+                <input type="text" id="name" placeholder="Your name" required>
+            </div>
+            <div class="form-group">
+                <textarea id="message" placeholder="Your message" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Send</button>
+        </form>
+    </div>
     <script src="./js/gallery.js"></script>
+    <script src="./js/telegram.js"></script>
+    <script>
+    function validateForm() {
+        const name = document.getElementById('name').value.trim();
+        const message = document.getElementById('message').value.trim();
+
+        if (name.length < 2) {
+            alert('Имя должно содержать минимум 2 символа');
+            return false;
+        }
+
+        if (message.length < 10) {
+            alert('Сообщение должно содержать минимум 10 символов');
+            return false;
+        }
+
+        return true;
+    }
+
+    // Добавьте проверку в обработчик отправки формы
+    if (!validateForm()) {
+        return;
+    }
+    </script>
 </body>
 </html>

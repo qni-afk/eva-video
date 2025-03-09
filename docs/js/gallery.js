@@ -1,3 +1,5 @@
+console.log('Script loaded!'); // Проверка загрузки скрипта
+
 // Получаем все элементы галереи
 const galleryItems = document.querySelectorAll('.gallery-item img');
 const modal = document.getElementById('imageModal');
@@ -91,131 +93,97 @@ window.addEventListener('load', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Обработка GIF изображений
-    const galleryImages = document.querySelectorAll('.gallery-img[data-gif]');
-    galleryImages.forEach(img => {
-        const staticSrc = img.src;
-        const gifSrc = img.dataset.gif;
+    console.log('DOM loaded!'); // Проверка загрузки DOM
 
-        // Предзагрузка GIF
-        const preloadGif = new Image();
-        preloadGif.src = gifSrc;
-
-        img.addEventListener('mouseenter', () => {
-            img.src = gifSrc;
-        });
-
-        img.addEventListener('mouseleave', () => {
-            img.src = staticSrc;
-        });
-    });
-
-    // Обработка видео
-    const galleryVideos = document.querySelectorAll('.gallery-video');
-    galleryVideos.forEach(video => {
-        const galleryItem = video.closest('.gallery-item');
-
-        galleryItem.addEventListener('mouseenter', () => {
-            video.play();
-        });
-
-        galleryItem.addEventListener('mouseleave', () => {
-            video.pause();
-            video.currentTime = 0;
-        });
-
-        // Предзагрузка видео
-        video.load();
-    });
-
-    // Анимация появления элементов при скролле
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '50px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.transform = 'translateY(0)';
-                entry.target.style.opacity = '1';
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-
-    document.querySelectorAll('.gallery-item').forEach(item => {
-        item.style.transform = 'translateY(50px)';
-        item.style.opacity = '0';
-        item.style.transition = 'all 0.6s ease';
-        observer.observe(item);
-    });
-
-    const galleryItems = document.querySelectorAll('.gallery-item');
-
-    galleryItems.forEach(item => {
-        const video = item.querySelector('.gallery-video');
-        if (!video) return;
-
-        // Создаем превью из первого кадра видео
-        video.addEventListener('loadeddata', () => {
-            const canvas = document.createElement('canvas');
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            canvas.getContext('2d').drawImage(video, 0, 0);
-
-            const previewImg = item.querySelector('.preview-img');
-            if (!previewImg.src) {
-                previewImg.src = canvas.toDataURL();
-            }
-        });
-
-        item.addEventListener('mouseenter', () => {
-            video.play();
-        });
-
-        item.addEventListener('mouseleave', () => {
-            video.pause();
-            video.currentTime = 0;
-        });
-
-        // Предзагрузка видео
-        video.load();
-    });
-
+    const cards = document.querySelectorAll('.gallery-item');
+    const threeDBtn = document.getElementById('3d-mode');
     const modal = document.getElementById('imageModal');
     const modalVideo = document.getElementById('modalVideo');
-    const modalImage = document.getElementById('modalImage');
+    const closeBtn = document.querySelector('.close');
+    let is3DMode = false;
 
-    galleryItems.forEach(item => {
-        const video = item.querySelector('.gallery-video');
+    console.log('Cards:', cards.length); // Проверка нахождения карточек
+    console.log('3D Button:', threeDBtn); // Проверка нахождения кнопки
+
+    // Улучшенная функция 3D эффекта
+    function handle3D(e) {
+        const card = e.currentTarget;
+        const rect = card.getBoundingClientRect();
+
+        // Вычисляем позицию курсора внутри элемента
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        // Преобразуем координаты в проценты
+        const xPercent = (x / rect.width) * 100;
+        const yPercent = (y / rect.height) * 100;
+
+        // Вычисляем углы поворота (увеличили до 25 градусов для более заметного эффекта)
+        const rotateX = ((yPercent - 50) / 50) * -25;
+        const rotateY = ((xPercent - 50) / 50) * 25;
+
+        // Применяем трансформацию с более выраженным эффектом
+        requestAnimationFrame(() => {
+            card.style.transform = `
+                perspective(1000px)
+                rotateX(${rotateX}deg)
+                rotateY(${rotateY}deg)
+                scale3d(1.1, 1.1, 1.1)
+                translateZ(50px)
+            `;
+        });
+    }
+
+    // Плавный сброс 3D эффекта
+    function reset3D(card) {
+        requestAnimationFrame(() => {
+            card.style.transform = `
+                perspective(1000px)
+                rotateX(0deg)
+                rotateY(0deg)
+                scale3d(1, 1, 1)
+                translateZ(0)
+            `;
+        });
+    }
+
+    // Обработчик кнопки 3D режима
+    threeDBtn.addEventListener('click', () => {
+        is3DMode = !is3DMode;
+        threeDBtn.classList.toggle('active');
+
+        cards.forEach(card => {
+            if (is3DMode) {
+                // Включаем 3D режим
+                card.style.transition = 'transform 0.2s ease-out';
+                card.addEventListener('mousemove', handle3D);
+                card.addEventListener('mouseleave', () => reset3D(card));
+            } else {
+                // Выключаем 3D режим
+                card.removeEventListener('mousemove', handle3D);
+                card.removeEventListener('mouseleave', () => reset3D(card));
+                reset3D(card);
+            }
+        });
+    });
+
+    // Обработка видео (работает независимо от 3D режима)
+    cards.forEach(card => {
+        const video = card.querySelector('.gallery-video');
+        const preview = card.querySelector('.preview-img');
+
         if (video) {
-            // Для элементов с видео
-            item.addEventListener('click', () => {
-                modal.style.display = "flex";
-                modalVideo.style.display = "block";
-                modalImage.style.display = "none";
-                modalVideo.src = video.querySelector('source').src;
-                modalVideo.play();
-            });
-
-            // Hover эффект для предпросмотра
-            item.addEventListener('mouseenter', () => {
+            card.addEventListener('mouseenter', () => {
                 video.play();
+                preview.style.opacity = '0';
+                video.style.opacity = '1';
             });
 
-            item.addEventListener('mouseleave', () => {
+            card.addEventListener('mouseleave', () => {
                 video.pause();
                 video.currentTime = 0;
-            });
-        } else {
-            // Для обычных изображений
-            const img = item.querySelector('img');
-            img.addEventListener('click', () => {
-                modal.style.display = "flex";
-                modalVideo.style.display = "none";
-                modalImage.style.display = "block";
-                modalImage.src = img.src;
+                preview.style.opacity = '1';
+                video.style.opacity = '0';
             });
         }
     });
